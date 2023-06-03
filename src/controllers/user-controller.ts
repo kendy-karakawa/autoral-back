@@ -8,7 +8,7 @@ export async function createUser(req: Request, res: Response, next: NextFunction
 
     try {
         const user = await userService.createUser({name, email, phone, password})
-        res.status(httpStatus.OK).send({
+        res.status(httpStatus.CREATED).send({
             id:user.id,
             name:user.name,
             email:user.email,
