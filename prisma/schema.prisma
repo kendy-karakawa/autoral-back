@@ -11,21 +11,83 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  name      String    @db.VarChar(255)
-  phone     String    @db.VarChar(255)
-  email     String    @unique @db.VarChar(255)
-  password  String    @db.VarChar(255)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Session   Session[]
+  id           Int            @id @default(autoincrement())
+  name         String         @db.VarChar(255)
+  phone        String         @db.VarChar(255)
+  email        String         @unique @db.VarChar(255)
+  password     String         @db.VarChar(255)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  Session      Session[]
+  Participants Participants[]
 }
 
 model Session {
   id        Int      @id @default(autoincrement())
   userId    Int
-  User      User     @relation(fields: [userId], references: [id])
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   token     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Groups {
+  id           Int            @id @default(autoincrement())
+  name         String         @db.VarChar(255)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  Participants Participants[]
+  Debts        Debts[]
+}
+
+model Participants {
+  id        Int         @id @default(autoincrement())
+  userId    Int
+  User      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  groupId   Int
+  Groups    Groups      @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  Expenses  Expenses[]
+  Divisions Divisions[]
+  debtsAsDebtor    Debts[]   @relation("DebtsDebtor")
+  debtsAsCreditor  Debts[]   @relation("DebtsCreditor")
+ 
+}
+
+model Expenses {
+  id            Int          @id @default(autoincrement())
+  name          String       @db.VarChar(255)
+  value         Int
+  participantId Int
+  Participants  Participants @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  Divisions     Divisions[]
+}
+
+model Divisions {
+  id            Int          @id @default(autoincrement())
+  value         Int
+  participantId Int
+  Participants  Participants @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  expenseId     Int
+  Expenses      Expenses     @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+
+model Debts {
+  id           Int          @id @default(autoincrement())
+  groupId      Int
+  group        Groups       @relation(fields: [groupId], references: [id])
+  debtorId     Int
+  debtor       Participants @relation("DebtsDebtor", fields: [debtorId], references: [id], onDelete: Cascade)
+  creditorId   Int
+  creditor     Participants @relation("DebtsCreditor", fields: [creditorId], references: [id], onDelete: Cascade)
+  amount       Int
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
