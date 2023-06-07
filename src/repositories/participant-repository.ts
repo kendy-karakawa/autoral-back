@@ -9,12 +9,11 @@ async function create(data: Prisma.ParticipantsUncheckedCreateInput) {
 
 async function getGroupByUserId(userId: number) {
   return prisma.participants.findMany({
-    where: {
-      userId,
-    },
-    select: {
-      Groups: true,
-    },
+   where:{
+    OR:[
+        
+    ]
+   }
   });
 }
 

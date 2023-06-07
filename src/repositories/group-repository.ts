@@ -1,14 +1,34 @@
-import { prisma } from "@/config"
+import { prisma } from "@/config";
 import { Prisma } from "@prisma/client";
 
 async function create(data: Prisma.GroupsUncheckedCreateInput) {
-   return prisma.groups.create({
-    data
-   })
+  return prisma.groups.create({
+    data,
+  });
+}
+
+async function getUserGroupsByUserId(userId: number) {
+  return prisma.groups.findMany({
+    where: {
+      OR: [
+        {
+          createdBy: userId,
+        },
+        {
+          Participants: {
+            some: {
+              userId,
+            },
+          },
+        },
+      ],
+    },
+  });
 }
 
 const groupRepository = {
-    create
-}
+  create,
+  getUserGroupsByUserId,
+};
 
-export default groupRepository
+export default groupRepository;
