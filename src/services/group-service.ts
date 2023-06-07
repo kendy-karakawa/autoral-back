@@ -9,10 +9,11 @@ async function findAllUserGroup(userId: number) {
 }
 
 async function createGroup(userId: number, groupName: string) {
-    const group = await groupRepository.create({name:groupName, createdBy:userId})
-    const participant = await participantRepository.create({userId, groupId:group.id})
-
-    return {}
+  const group = await groupRepository.create({
+    name: groupName,
+    createdBy: userId,
+  });
+  return group;
 }
 
 const groupService = {

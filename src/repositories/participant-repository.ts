@@ -7,19 +7,8 @@ async function create(data: Prisma.ParticipantsUncheckedCreateInput) {
   });
 }
 
-async function getGroupByUserId(userId: number) {
-  return prisma.participants.findMany({
-   where:{
-    OR:[
-        
-    ]
-   }
-  });
-}
-
 const participantRepository = {
   create,
-  getGroupByUserId,
 };
 
 export default participantRepository;
