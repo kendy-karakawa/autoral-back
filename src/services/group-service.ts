@@ -18,6 +18,7 @@ async function createGroup(userId: number, groupName: string) {
 
 const groupService = {
   findAllUserGroup,
+  createGroup
 };
 
 export default groupService;

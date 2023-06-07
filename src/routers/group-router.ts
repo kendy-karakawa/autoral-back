@@ -1,10 +1,13 @@
-import { findAllUserGroup } from "@/controllers";
-import { authenticateToken } from "@/middlewares";
+import { createGroup, findAllUserGroup } from "@/controllers";
+import { authenticateToken, validateBody } from "@/middlewares";
+import { createGroupSchema } from "@/schemas";
 import { Router } from "express";
 
-const groupRouter = Router()
+const groupRouter = Router();
 
-groupRouter.all('/*', authenticateToken)
-.get('/', findAllUserGroup)
+groupRouter
+  .all("/*", authenticateToken)
+  .get("/", findAllUserGroup)
+  .post("/", validateBody(createGroupSchema), createGroup);
 
-export default groupRouter
+export default groupRouter;
