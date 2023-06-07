@@ -19,6 +19,7 @@ model User {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   Session      Session[]
+  Groups       Groups[]
   Participants Participants[]
 }
 
@@ -34,6 +35,8 @@ model Session {
 model Groups {
   id           Int            @id @default(autoincrement())
   name         String         @db.VarChar(255)
+  createdBy    Int
+  User         User           @relation(fields: [createdBy], references: [id], onDelete: Cascade)
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   Participants Participants[]
