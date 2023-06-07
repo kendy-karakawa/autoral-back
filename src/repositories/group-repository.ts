@@ -1,12 +1,14 @@
 import { prisma } from "@/config"
 import { Prisma } from "@prisma/client";
 
-async function getGroupByUserId(userId:number) {
-   
+async function create(data: Prisma.GroupsUncheckedCreateInput) {
+   return prisma.groups.create({
+    data
+   })
 }
 
 const groupRepository = {
-    getGroupByUserId
+    create
 }
 
 export default groupRepository
