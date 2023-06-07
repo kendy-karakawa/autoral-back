@@ -41,18 +41,18 @@ model Groups {
 }
 
 model Participants {
-  id        Int         @id @default(autoincrement())
-  userId    Int
-  User      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  groupId   Int
-  Groups    Groups      @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  Expenses  Expenses[]
-  Divisions Divisions[]
-  debtsAsDebtor    Debts[]   @relation("DebtsDebtor")
-  debtsAsCreditor  Debts[]   @relation("DebtsCreditor")
- 
+  id              Int         @id @default(autoincrement())
+  userId          Int
+  User            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  groupId         Int
+  Groups          Groups      @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  accepted        Boolean     @default(false)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  Expenses        Expenses[]
+  Divisions       Divisions[]
+  debtsAsDebtor   Debts[]     @relation("DebtsDebtor")
+  debtsAsCreditor Debts[]     @relation("DebtsCreditor")
 }
 
 model Expenses {
@@ -77,17 +77,15 @@ model Divisions {
   updatedAt     DateTime     @updatedAt
 }
 
-
 model Debts {
-  id           Int          @id @default(autoincrement())
-  groupId      Int
-  group        Groups       @relation(fields: [groupId], references: [id])
-  debtorId     Int
-  debtor       Participants @relation("DebtsDebtor", fields: [debtorId], references: [id], onDelete: Cascade)
-  creditorId   Int
-  creditor     Participants @relation("DebtsCreditor", fields: [creditorId], references: [id], onDelete: Cascade)
-  amount       Int
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
+  id         Int          @id @default(autoincrement())
+  groupId    Int
+  group      Groups       @relation(fields: [groupId], references: [id])
+  debtorId   Int
+  debtor     Participants @relation("DebtsDebtor", fields: [debtorId], references: [id], onDelete: Cascade)
+  creditorId Int
+  creditor   Participants @relation("DebtsCreditor", fields: [creditorId], references: [id], onDelete: Cascade)
+  amount     Int
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
 }
-
