@@ -5,6 +5,7 @@ import userRouter from "./routers/user-router";
 import { handleApplicationErrors } from "./middlewares";
 import authenticationRouter from "./routers/authentication-router";
 import groupRouter from "./routers/group-router";
+import participantRouter from "./routers/participant-router";
 
 loadEnv();
 
@@ -15,6 +16,7 @@ app.get('/test', (_req, res) => res.send('OK!'))
 app.use('/user', userRouter)
 app.use('/sigin', authenticationRouter)
 app.use('/group', groupRouter)
+app.use('/participant', participantRouter)
 app.use(handleApplicationErrors)
 
 export function init(): Promise<Express> {
