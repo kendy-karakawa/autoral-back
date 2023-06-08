@@ -16,6 +16,7 @@ model User {
   phone        String         @db.VarChar(255)
   email        String         @unique @db.VarChar(255)
   password     String         @db.VarChar(255)
+  image        String         @default("https://cdn-icons-png.flaticon.com/512/3106/3106921.png")
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   Session      Session[]
@@ -35,6 +36,7 @@ model Session {
 model Groups {
   id           Int            @id @default(autoincrement())
   name         String         @db.VarChar(255)
+  image        String         @default("https://cdn.pixabay.com/photo/2018/11/13/21/44/instagram-3814060_1280.png")
   createdBy    Int
   User         User           @relation(fields: [createdBy], references: [id], onDelete: Cascade)
   createdAt    DateTime       @default(now())
