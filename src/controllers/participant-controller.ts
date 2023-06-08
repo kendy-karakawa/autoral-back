@@ -27,3 +27,15 @@ export async function updateAcceptedStatus(req: AuthenticatedRequest, res: Respo
         next(error)
     }
 }
+
+export async function deleteParticipant(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+    try {
+        const {userId} = req
+        const {groupId} = req.query
+        const {participantId} = req.params
+        await participantService.deleteParticipant(userId, Number(groupId), Number(participantId))
+        res.sendStatus(httpStatus.OK)
+    } catch (error) {
+        next(error)
+    }
+}

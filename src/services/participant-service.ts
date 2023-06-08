@@ -13,6 +13,11 @@ async function updateAcceptedStatus(userId: number, groupId: number, participant
     return await participantRepository.updateAcceptedStatus(participantId)
 }
 
+async function deleteParticipant(userId: number, groupId: number, participantId:number) {
+    await checkParticipantId(userId, groupId, participantId)
+    return await participantRepository.deleteParticipant(participantId)
+}
+
 async function checkParticipantId(userId: number, groupId: number, participantId:number) {
     const checkedParticipant = await participantRepository.checkParticipantId(userId, groupId)
     if (!checkedParticipant || checkedParticipant.id !== participantId) throw forBiddenError()
@@ -23,7 +28,8 @@ async function checkParticipantId(userId: number, groupId: number, participantId
 
 const participantService = {
     getAcceptedStatus,
-    updateAcceptedStatus
+    updateAcceptedStatus,
+    deleteParticipant
 }
 
 export default participantService
