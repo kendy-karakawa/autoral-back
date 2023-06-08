@@ -6,7 +6,8 @@ const participantRouter = Router();
 
 participantRouter
   .all("/*", authenticateToken)
-  .get("/:groupId", getAcceptedStatus);
+  .get("/:groupId", getAcceptedStatus)
+  .put("/:participantId",)
 
   
 export default participantRouter;

@@ -39,6 +39,17 @@ async function getUserGroupsByUserId(userId: number) {
   });
 }
 
+async function updateAcceptedStatus(participantId:number) {
+  return prisma.participants.update({
+    where:{
+      id: participantId
+    },
+    data:{
+      accepted: true
+    }
+  })
+}
+
 const participantRepository = {
   create,
   getAcceptedStatus,
