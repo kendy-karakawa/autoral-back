@@ -58,12 +58,25 @@ async function deleteParticipant(participantId:number) {
   })
 }
 
+async function checkParticipantId(userId: number, groupId: number) {
+  return prisma.participants.findFirst({
+    where:{
+      userId,
+      groupId
+    },
+    select:{
+      id: true
+    }
+  })
+}
+
 const participantRepository = {
   create,
   getAcceptedStatus,
   getUserGroupsByUserId,
   updateAcceptedStatus,
-  deleteParticipant
+  deleteParticipant,
+  checkParticipantId
 };
 
 export default participantRepository;
