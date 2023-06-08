@@ -50,10 +50,20 @@ async function updateAcceptedStatus(participantId:number) {
   })
 }
 
+async function deleteParticipant(participantId:number) {
+  return prisma.participants.delete({
+    where:{
+      id: participantId
+    }
+  })
+}
+
 const participantRepository = {
   create,
   getAcceptedStatus,
   getUserGroupsByUserId,
+  updateAcceptedStatus,
+  deleteParticipant
 };
 
 export default participantRepository;
