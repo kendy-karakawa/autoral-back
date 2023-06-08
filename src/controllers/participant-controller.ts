@@ -2,8 +2,6 @@ import { AuthenticatedRequest } from "@/middlewares";
 import participantService from "@/services/participant-service";
 import { Response, NextFunction } from "express";
 import httpStatus from "http-status";
-import { number } from "joi";
-
 
 export async function getAcceptedStatus(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
@@ -19,9 +17,9 @@ export async function getAcceptedStatus(req: AuthenticatedRequest, res: Response
 export async function updateAcceptedStatus(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
         const {userId} = req
-        const {groupId} = req.query
+        const {groupId} = req.body
         const {participantId} = req.params
-        const update = await participantService.updateAcceptedStatus(userId, Number(groupId), Number(participantId))
+        await participantService.updateAcceptedStatus(userId, Number(groupId), Number(participantId))
         res.sendStatus(httpStatus.OK)
     } catch (error) {
         next(error)
