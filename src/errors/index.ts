@@ -3,3 +3,4 @@ export * from "./invalid-data-error";
 export * from "./credential-error";
 export * from "./unauthorized-error"
 export * from "./not-found-error"
+export * from "./forbidden-error"
