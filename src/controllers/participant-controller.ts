@@ -2,14 +2,27 @@ import { AuthenticatedRequest } from "@/middlewares";
 import participantService from "@/services/participant-service";
 import { Response, NextFunction } from "express";
 import httpStatus from "http-status";
+import { number } from "joi";
 
 
-export default async function getAcceptedStatus(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+export async function getAcceptedStatus(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
         const {userId} = req
         const {groupId} = req.params 
         const status = await participantService.getAcceptedStatus(userId, Number(groupId))
         res.status(httpStatus.OK).send(status)
+    } catch (error) {
+        next(error)
+    }
+}
+
+export async function updateAcceptedStatus(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+    try {
+        const {userId} = req
+        const {groupId} = req.query
+        const {participantId} = req.params
+        const update = await participantService.updateAcceptedStatus(userId, Number(groupId), Number(participantId))
+        res.sendStatus(httpStatus.OK)
     } catch (error) {
         next(error)
     }

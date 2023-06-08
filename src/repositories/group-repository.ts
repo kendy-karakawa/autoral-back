@@ -26,9 +26,12 @@ async function getUserGroupsByUserId(userId: number) {
   });
 }
 
+
+
 const groupRepository = {
   create,
   getUserGroupsByUserId,
+ 
 };
 
 export default groupRepository;

@@ -25,9 +25,10 @@ async function createGroup(userId: number, groupName: string) {
   return group;
 }
 
+
 const groupService = {
   findAllUserGroup,
-  createGroup
+  createGroup,
 };
 
 export default groupService;
