@@ -10,7 +10,19 @@ async function create(data: Prisma.ParticipantsUncheckedCreateInput) {
 async function getParticipantsByGroupId(groupId: number) {
   return prisma.participants.findMany({
     where:{
-      groupId
+      groupId,
+      accepted: true
+    },
+    select: {
+      id: true,
+      userId: true,
+      User:{
+        select:{
+          name: true,
+          image: true
+        }
+      }
+      
     }
   })
 }
