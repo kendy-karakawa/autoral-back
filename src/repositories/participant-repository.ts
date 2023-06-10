@@ -1,4 +1,5 @@
 import { prisma } from "@/config";
+import { ManyParticipantsData } from "@/protocols";
 import { Prisma } from "@prisma/client";
 
 async function create(data: Prisma.ParticipantsUncheckedCreateInput) {
@@ -6,20 +7,26 @@ async function create(data: Prisma.ParticipantsUncheckedCreateInput) {
     data,
   });
 }
+async function createMany(data: ManyParticipantsData) {
+  return prisma.participants.createMany({
+    data
+  })
+}
 
 async function getParticipantsByGroupId(groupId: number) {
   return prisma.participants.findMany({
     where:{
-      groupId,
-      accepted: true
+      groupId
     },
     select: {
       id: true,
       userId: true,
+      accepted: true,
       User:{
         select:{
           name: true,
-          image: true
+          image: true,
+          
         }
       }
       
@@ -81,7 +88,8 @@ const participantRepository = {
   getUserGroupsByUserId,
   updateAcceptedStatus,
   deleteParticipant,
-  checkParticipant
+  checkParticipant,
+  createMany
 };
 
 export default participantRepository;

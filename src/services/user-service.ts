@@ -20,7 +20,6 @@ async function createUser ({name, email, phone, password}: CreateUserParams): Pr
 }
 
 async function getUsersWithSearchTerm(searchTerm: string, userId: number, groupId: number) {
-    await groupService.checkGroupCreator(userId, groupId)
     const users = await userRepository.getUsersWithSearchTerm(searchTerm)
     return users
 }

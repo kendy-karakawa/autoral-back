@@ -1,4 +1,5 @@
 import { forBiddenError, notFoundError } from "@/errors";
+import { ManyParticipantsData, UserArray } from "@/protocols";
 import participantRepository from "@/repositories/participant-repository";
 
 
@@ -27,12 +28,18 @@ async function checkParticipantId(userId: number, groupId: number, participantId
     return
 }
 
+async function cretaeParticipants(userId: number, groupId: number, participantsId: UserArray) {
+    const data: ManyParticipantsData = participantsId.map(item => ({userId: item.id, groupId}))
+    return await participantRepository.createMany(data)
+}
+
 
 
 const participantService = {
     getGroupParticipants,
     updateAcceptedStatus,
-    deleteParticipant
+    deleteParticipant,
+    cretaeParticipants
 }
 
 export default participantService

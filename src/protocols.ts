@@ -3,3 +3,12 @@ export type ApplicationError = {
   message: string;
 };
 
+export type UserArray = {
+  id: number
+}[]
+
+export type ManyParticipantsData = {
+  userId: number,
+  groupId: number
+}[]
+
