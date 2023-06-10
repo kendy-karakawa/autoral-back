@@ -26,12 +26,24 @@ async function getUserGroupsByUserId(userId: number) {
   });
 }
 
-
+async function getGroupById(groupId: number) {
+  return prisma.groups.findFirst({
+    where: {
+      id: groupId,
+    },
+    select: {
+      id: true,
+      name: true,
+      image: true,
+      createdBy: true,
+    },
+  });
+}
 
 const groupRepository = {
   create,
   getUserGroupsByUserId,
- 
+  getGroupById,
 };
 
 export default groupRepository;
