@@ -7,16 +7,12 @@ async function create(data: Prisma.ParticipantsUncheckedCreateInput) {
   });
 }
 
-async function getAcceptedStatus(userId: number, groupId: number) {
-  return prisma.participants.findFirst({
-    where: {
-      userId,
-      groupId,
-    },
-    select: {
-      accepted: true,
-    },
-  });
+async function getParticipantsByGroupId(groupId: number) {
+  return prisma.participants.findMany({
+    where:{
+      groupId
+    }
+  })
 }
 
 async function getUserGroupsByUserId(userId: number) {
@@ -58,25 +54,22 @@ async function deleteParticipant(participantId:number) {
   })
 }
 
-async function checkParticipantId(userId: number, groupId: number) {
+async function checkParticipant(userId: number, groupId: number) {
   return prisma.participants.findFirst({
     where:{
       userId,
       groupId
-    },
-    select:{
-      id: true
     }
   })
 }
 
 const participantRepository = {
   create,
-  getAcceptedStatus,
+  getParticipantsByGroupId,
   getUserGroupsByUserId,
   updateAcceptedStatus,
   deleteParticipant,
-  checkParticipantId
+  checkParticipant
 };
 
 export default participantRepository;

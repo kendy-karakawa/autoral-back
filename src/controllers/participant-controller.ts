@@ -3,12 +3,12 @@ import participantService from "@/services/participant-service";
 import { Response, NextFunction } from "express";
 import httpStatus from "http-status";
 
-export async function getAcceptedStatus(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+export async function getGroupParticipants(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
         const {userId} = req
         const {groupId} = req.params 
-        const status = await participantService.getAcceptedStatus(userId, Number(groupId))
-        res.status(httpStatus.OK).send(status)
+        const participants = await participantService.getGroupParticipants(userId, Number(groupId))
+        res.status(httpStatus.OK).send(participants)
     } catch (error) {
         next(error)
     }
