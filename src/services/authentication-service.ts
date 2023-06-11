@@ -14,6 +14,7 @@ async function signIn(email: string, password: string): Promise<SigInResult> {
     name: user.name,
     phone: user.phone,
     email: user.email,
+    image: user.image,
     token,
   };
 }
@@ -37,7 +38,7 @@ async function createSession(userId: number) {
 
 type GetUserOrFailResult = Pick<
   User,
-  "id" | "name" | "phone" | "email" | "password"
+  "id" | "name" | "phone" | "email" | "password" | "image"
 >;
 
 type SigInResult = {
@@ -45,6 +46,7 @@ type SigInResult = {
   name: string;
   phone: string;
   email: string;
+  image: string;
   token: string;
 };
 
