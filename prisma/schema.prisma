@@ -61,14 +61,14 @@ model Participants {
 }
 
 model Expenses {
-  id            Int          @id @default(autoincrement())
-  name          String       @db.VarChar(255)
-  value         Int
-  participantId Int
-  Participants  Participants @relation(fields: [participantId], references: [id], onDelete: Cascade)
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  Divisions     Divisions[]
+  id           Int          @id @default(autoincrement())
+  name         String       @db.VarChar(255)
+  value        Int
+  paidBy       Int
+  Participants Participants @relation(fields: [paidBy], references: [id], onDelete: Cascade)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  Divisions    Divisions[]
 }
 
 model Divisions {

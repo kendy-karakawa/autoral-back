@@ -82,6 +82,15 @@ async function checkParticipant(userId: number, groupId: number) {
   })
 }
 
+async function checkParticipantById (id: number, groupId: number) {
+  return prisma.participants.findFirst({
+    where:{
+      id,
+      groupId
+    }
+  })
+}
+
 const participantRepository = {
   create,
   getParticipantsByGroupId,
@@ -89,7 +98,8 @@ const participantRepository = {
   updateAcceptedStatus,
   deleteParticipant,
   checkParticipant,
-  createMany
+  createMany,
+  checkParticipantById
 };
 
 export default participantRepository;

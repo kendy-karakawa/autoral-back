@@ -1,7 +1,6 @@
 import { AuthenticatedRequest } from "@/middlewares";
-import groupService from "@/services/group-service";
-
 import { Response, NextFunction } from "express";
+import groupService from "@/services/group-service";
 import httpStatus from "http-status";
 
 export async function findAllUserGroup(

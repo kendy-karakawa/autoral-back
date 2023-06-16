@@ -12,3 +12,13 @@ export type ManyParticipantsData = {
   groupId: number
 }[]
 
+export type ParticipantsIds = {
+  id: number
+}[]
+
+export type DivisionsParam = {
+  paidBy: number,
+  totalValue: number,
+  expenseId: number,
+  participantsIds: ParticipantsIds
+}
