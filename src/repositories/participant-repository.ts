@@ -91,6 +91,15 @@ async function checkParticipantById (id: number, groupId: number) {
   })
 }
 
+async function countGroupParticipantsWhenAceptIstrue(groupId: number) {
+  return prisma.participants.count({
+    where:{
+      groupId,
+      accepted:true
+    }
+  })
+}
+
 const participantRepository = {
   create,
   getParticipantsByGroupId,
@@ -99,7 +108,8 @@ const participantRepository = {
   deleteParticipant,
   checkParticipant,
   createMany,
-  checkParticipantById
+  checkParticipantById,
+  countGroupParticipantsWhenAceptIstrue
 };
 
 export default participantRepository;
