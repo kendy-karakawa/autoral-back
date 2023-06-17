@@ -16,6 +16,7 @@ async function createExpense(userId: number, name: string, totalValue: number, g
     name,
     value:totalValue,
     paidBy: participantId,
+    groupId
   };
 
   const expense = await expenseRepository.createExpense(expenseData);
@@ -30,10 +31,15 @@ async function createExpense(userId: number, name: string, totalValue: number, g
   return await divisionService.splitExpense(divisionsParam);
 }
 
-export type createExpenseType = Pick<Expenses, "name" | "value" | "paidBy">;
+async function getAllExpense(userId:number, groupId:number) {
+  return await expenseRepository.getAllExpense(groupId)
+}
+
+export type createExpenseType = Pick<Expenses, "name" | "value" | "paidBy" | "groupId">;
 
 const expenseService = {
   createExpense,
+  getAllExpense
 };
 
 export default expenseService;

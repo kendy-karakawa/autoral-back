@@ -17,3 +17,20 @@ export async function createExpense(
         next(error);
     }
 }
+
+export async function getAllExpense(
+    req: AuthenticatedRequest,
+    res: Response,
+    next: NextFunction    
+) {
+    try {
+        const {userId} = req
+        const {groupId} = req.params
+        const result = await expenseService.getAllExpense(userId, Number(groupId))
+        
+        res.status(httpStatus.OK).send(result)
+    } catch (error) {
+        next(error);
+    }
+    
+}

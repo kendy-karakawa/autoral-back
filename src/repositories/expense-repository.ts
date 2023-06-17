@@ -7,9 +7,19 @@ async function createExpense(data: createExpenseType) {
     })
 }
 
+async function getAllExpense(groupId: number) {
+    return prisma.expenses.findMany({
+        where: {
+            groupId
+        }
+    })
+    
+}
+
 
 const expenseRepository = {
-    createExpense
+    createExpense,
+    getAllExpense
 }
 
 export default expenseRepository

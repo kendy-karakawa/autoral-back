@@ -43,6 +43,7 @@ model Groups {
   updatedAt    DateTime       @updatedAt
   Participants Participants[]
   Debts        Debts[]
+  Expenses     Expenses[]
 }
 
 model Participants {
@@ -66,6 +67,8 @@ model Expenses {
   value        Int
   paidBy       Int
   Participants Participants @relation(fields: [paidBy], references: [id], onDelete: Cascade)
+  groupId      Int
+  Groups       Groups       @relation(fields: [groupId], references: [id], onDelete: Cascade)
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
   Divisions    Divisions[]
