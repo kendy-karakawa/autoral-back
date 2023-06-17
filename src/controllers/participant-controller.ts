@@ -15,6 +15,17 @@ export async function getGroupParticipants(req: AuthenticatedRequest, res: Respo
     }
 }
 
+export async function getAcceptedGroupParticipants(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+    try {
+        const {userId} = req
+        const {groupId} = req.params 
+        const participants = await participantService.getAcceptedGroupParticipants(userId, Number(groupId))
+        res.status(httpStatus.OK).send(participants)
+    } catch (error) {
+        next(error)
+    }
+}
+
 export async function updateAcceptedStatus(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
         const {userId} = req

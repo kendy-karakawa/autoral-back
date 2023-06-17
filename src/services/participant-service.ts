@@ -5,12 +5,22 @@ import participantRepository from "@/repositories/participant-repository";
 async function getGroupParticipants(userId: number, groupId: number) {
   const IsUserParticipantOfTheGroup =
     await participantRepository.checkParticipant(userId, groupId);
-  if (!IsUserParticipantOfTheGroup) throw forBiddenError();
+  if (!IsUserParticipantOfTheGroup) throw notFoundError();
 
   const participants = await participantRepository.getParticipantsByGroupId(
     groupId
   );
-  if (!participants) throw notFoundError();
+  return participants;
+}
+
+async function getAcceptedGroupParticipants(userId: number, groupId: number) {
+  const IsUserParticipantOfTheGroup =
+    await participantRepository.checkParticipant(userId, groupId);
+  if (!IsUserParticipantOfTheGroup) throw notFoundError();
+
+  const participants = await participantRepository.getAcceptedParticipantsByGroupId(
+    groupId
+  );
   return participants;
 }
 
@@ -88,6 +98,7 @@ async function checkParticipantsAreFromThisGroup(
 
 const participantService = {
   getGroupParticipants,
+  getAcceptedGroupParticipants,
   updateAcceptedStatus,
   deleteParticipant,
   cretaeParticipants,

@@ -34,6 +34,28 @@ async function getParticipantsByGroupId(groupId: number) {
   })
 }
 
+async function getAcceptedParticipantsByGroupId(groupId: number) {
+  return prisma.participants.findMany({
+    where:{
+      groupId,
+      accepted: true
+    },
+    select: {
+      id: true,
+      userId: true,
+      accepted: true,
+      User:{
+        select:{
+          name: true,
+          image: true,
+          
+        }
+      }
+      
+    }
+  })
+}
+
 async function getUserGroupsByUserId(userId: number) {
   return prisma.participants.findMany({
     where: {
@@ -109,7 +131,8 @@ const participantRepository = {
   checkParticipant,
   createMany,
   checkParticipantById,
-  countGroupParticipantsWhenAceptIstrue
+  countGroupParticipantsWhenAceptIstrue,
+  getAcceptedParticipantsByGroupId
 };
 
 export default participantRepository;
