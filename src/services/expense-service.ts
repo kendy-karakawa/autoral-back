@@ -51,7 +51,7 @@ const transformedList = originalList.map((obj)=> ({
       name:obj.Participants.User.name,
       image: obj.Participants.User.image,
     },
-    divisiobs: obj.Divisions.map(division =>({
+    divisions: obj.Divisions.map(division =>({
       name:division.Participants.User.name
     }))
 
@@ -59,6 +59,10 @@ const transformedList = originalList.map((obj)=> ({
 ))
   return transformedList
   
+}
+
+async function deleteExpense(userId: number, expenseId: number) {
+  return await expenseRepository.deleteExpense(expenseId)
 }
 
 export type getAllExpenseType = {
@@ -111,7 +115,8 @@ export type createExpenseType = Pick<Expenses, "name" | "value" | "paidBy" | "gr
 
 const expenseService = {
   createExpense,
-  getAllExpense
+  getAllExpense,
+  deleteExpense
 };
 
 export default expenseService;

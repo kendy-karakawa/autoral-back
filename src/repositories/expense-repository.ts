@@ -41,10 +41,19 @@ async function getAllExpense(groupId: number) {
     
 }
 
+async function deleteExpense(expenseId: number) {
+    return prisma.expenses.delete({
+        where:{
+            id: expenseId
+        }
+    })
+  }
+
 
 const expenseRepository = {
     createExpense,
-    getAllExpense
+    getAllExpense,
+    deleteExpense
 }
 
 export default expenseRepository

@@ -8,29 +8,49 @@ export async function createExpense(
   res: Response,
   next: NextFunction
 ) {
-    try {
-        const {userId} = req
-        const {name, totalValue, groupId, participantsIds} = req.body
-        await expenseService.createExpense(userId, name, totalValue, groupId, participantsIds)
-        res.sendStatus(httpStatus.CREATED)
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const { userId } = req;
+    const { name, totalValue, groupId, participantsIds } = req.body;
+    await expenseService.createExpense(
+      userId,
+      name,
+      totalValue,
+      groupId,
+      participantsIds
+    );
+    res.sendStatus(httpStatus.CREATED);
+  } catch (error) {
+    next(error);
+  }
 }
 
 export async function getAllExpense(
-    req: AuthenticatedRequest,
-    res: Response,
-    next: NextFunction    
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
 ) {
-    try {
-        const {userId} = req
-        const {groupId} = req.params
-        const result = await expenseService.getAllExpense(userId, Number(groupId))
-        
-        res.status(httpStatus.OK).send(result)
-    } catch (error) {
-        next(error);
-    }
-    
+  try {
+    const { userId } = req;
+    const { groupId } = req.params;
+    const result = await expenseService.getAllExpense(userId, Number(groupId));
+
+    res.status(httpStatus.OK).send(result);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function deleteExpense(
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { userId } = req;
+    const { expenseId } = req.params;
+    await expenseService.deleteExpense(userId, Number(expenseId))
+    res.sendStatus(httpStatus.OK);
+  } catch (error) {
+    next(error);
+  }
 }
