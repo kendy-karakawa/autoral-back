@@ -61,7 +61,7 @@ async function sumGroupExpenses(groupId: number) {
     return result._sum.value
 }
 
-async function sumUserPaidExpenses( participantId: number, groupId: number) {
+async function sumUserPaidExpenses( groupId: number, participantId: number ) {
   const result = await prisma.expenses.aggregate({
       _sum:{
           value: true
@@ -75,7 +75,7 @@ async function sumUserPaidExpenses( participantId: number, groupId: number) {
   return result._sum.value
 }
 
-async function getUserExpensesDivisionPart(participantId: number, groupId: number) {
+async function getUserExpensesDivisionPart(groupId: number, participantId: number ) {
   return prisma.expenses.findMany({
     where:{
       Divisions:{

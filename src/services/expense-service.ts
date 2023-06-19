@@ -87,12 +87,15 @@ async function getGeneralExpensesValues(userId: number, groupId: number) {
     userId,
     groupId
   );
+    console.log(userId, participantId)
 
   const group = await expenseRepository.sumGroupExpenses(groupId);
   const userPaid = await expenseRepository.sumUserPaidExpenses(
     groupId,
     participantId
   );
+
+  
   const userPart = await getUserExpensesDivisionPart(groupId, participantId);
   const members = await getMembersDivisions(groupId);
   return { group, userPaid, userPart, members };
