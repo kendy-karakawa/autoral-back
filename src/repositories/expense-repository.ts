@@ -1,59 +1,104 @@
 import { prisma } from "@/config";
-import { createExpenseType } from "@/services";
+import { createExpenseType } from "@/protocols";
 
 async function createExpense(data: createExpenseType) {
-    return prisma.expenses.create({
-        data,
-    })
+  return prisma.expenses.create({
+    data,
+  });
 }
 
 async function getAllExpense(groupId: number) {
-    return prisma.expenses.findMany({
-        where: {
-            groupId
-        },
-        include:{
-            Participants:{
-                include:{
-                    User:{
-                        select:{
-                            name:true,
-                            image:true
-                        }
-                    }
-                }
+  return prisma.expenses.findMany({
+    where: {
+      groupId,
+    },
+    include: {
+      Participants: {
+        include: {
+          User: {
+            select: {
+              name: true,
+              image: true,
             },
-            Divisions:{
-                include:{
-                    Participants:{
-                        include:{
-                            User:{
-                                select:{
-                                    name:true
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    })
-    
+          },
+        },
+      },
+      Divisions: {
+        include: {
+          Participants: {
+            include: {
+              User: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
 }
 
 async function deleteExpense(expenseId: number) {
-    return prisma.expenses.delete({
-        where:{
-            id: expenseId
-        }
-    })
-  }
-
-
-const expenseRepository = {
-    createExpense,
-    getAllExpense,
-    deleteExpense
+  return prisma.expenses.delete({
+    where: {
+      id: expenseId,
+    },
+  });
 }
 
-export default expenseRepository
+async function sumGroupExpenses(groupId: number) {
+    const result = await prisma.expenses.aggregate({
+        _sum:{
+            value: true
+        },
+        where:{
+            groupId
+        }
+    })
+
+    return result._sum.value
+}
+
+async function sumUserPaidExpenses( participantId: number, groupId: number) {
+  const result = await prisma.expenses.aggregate({
+      _sum:{
+          value: true
+      },
+      where:{
+          groupId,
+          paidBy: participantId
+      }
+  })
+
+  return result._sum.value
+}
+
+async function getUserExpensesDivisionPart(participantId: number, groupId: number) {
+  return prisma.expenses.findMany({
+    where:{
+      Divisions:{
+        some:{
+          participantId
+        }
+        
+      }
+    },
+    include:{
+      Divisions: true
+    }
+      
+  })
+}
+
+const expenseRepository = {
+  createExpense,
+  getAllExpense,
+  deleteExpense,
+  sumGroupExpenses,
+  sumUserPaidExpenses,
+  getUserExpensesDivisionPart
+};
+
+export default expenseRepository;

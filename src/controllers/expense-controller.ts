@@ -48,8 +48,24 @@ export async function deleteExpense(
   try {
     const { userId } = req;
     const { expenseId } = req.params;
-    await expenseService.deleteExpense(userId, Number(expenseId))
+    await expenseService.deleteExpense(userId, Number(expenseId));
     res.sendStatus(httpStatus.OK);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getGeneralExpensesValues(
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { userId } = req;
+    const { groupId } = req.params;
+    const result = await expenseService.getGeneralExpensesValues(userId, Number(groupId));
+
+    res.status(httpStatus.OK).send(result);
   } catch (error) {
     next(error);
   }
