@@ -9,14 +9,14 @@ async function splitExpense({
 }: DivisionsParam) {
   const value = totalValue / participantsIds.length;
   const manyData: ManyDivisionType = participantsIds.map((item) => {
-    if (item.id !== paidBy) {
-      return { participantId: item.id, expenseId, value: value * -1 };
-    } else {
+    if (item.id === paidBy) {
       return {
         participantId: item.id,
         expenseId,
         value: value * (participantsIds.length - 1),
       };
+    } else {
+      return { participantId: item.id, expenseId, value: value * -1 };
     }
   });
 
