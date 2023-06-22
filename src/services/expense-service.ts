@@ -46,7 +46,13 @@ async function createExpense(
     participantsIds,
   };
 
-  return await divisionService.splitExpense(divisionsParam);
+  const isUserPartOfDivision = participantsIds.find(obj => obj.id === expense.paidBy )
+
+  if(isUserPartOfDivision) {
+    return await divisionService.splitExpenseWhenUserIsPartOfDivision(divisionsParam);
+  }else{
+    return await divisionService.splitExpenseWhenUserIsNotPartOfDivision(divisionsParam);
+  } 
 }
 
 async function getAllExpense(userId: number, groupId: number) {
