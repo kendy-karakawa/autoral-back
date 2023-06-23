@@ -41,6 +41,7 @@ export type getAllExpenseType = {
   id: number;
   name: string;
   value: number;
+  divisionPart: boolean;
   paidBy: number;
   groupId: number;
   createdAt: Date;
@@ -82,5 +83,5 @@ export type divisionsType = {
 
 export type createExpenseType = Pick<
   Expenses,
-  "name" | "value" | "paidBy" | "groupId"
+  "name" | "value" | "paidBy" | "groupId" | "divisionPart"
 >;

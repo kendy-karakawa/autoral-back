@@ -65,6 +65,7 @@ model Expenses {
   id           Int          @id @default(autoincrement())
   name         String       @db.VarChar(255)
   value        Int
+  divisionPart Boolean
   paidBy       Int
   Participants Participants @relation(fields: [paidBy], references: [id], onDelete: Cascade)
   groupId      Int

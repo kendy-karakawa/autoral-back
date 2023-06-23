@@ -75,9 +75,10 @@ async function sumUserPaidExpenses( groupId: number, participantId: number ) {
   return result._sum.value
 }
 
-async function getUserExpensesDivisionPart(groupId: number, participantId: number ) {
+async function getUserExpensesDivisionPart(participantId: number, divisionPart: boolean ) {
   return prisma.expenses.findMany({
     where:{
+      divisionPart,
       Divisions:{
         some:{
           participantId

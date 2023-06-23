@@ -19,8 +19,9 @@ async function splitExpenseWhenUserIsPartOfDivision({
       return { participantId: item.id, expenseId, value: value * -1 };
     }
   });
-
+  
   await divisionRepository.createDivisions(manyData);
+  
 }
 
 async function splitExpenseWhenUserIsNotPartOfDivision({

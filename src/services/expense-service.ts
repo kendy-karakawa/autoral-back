@@ -20,21 +20,24 @@ async function createExpense(
   groupId: number,
   participantsIds: ParticipantsIds
 ) {
-  const participantId = await participantService.getParticipantId(
+  const userParticipantId = await participantService.getParticipantId(
     userId,
     groupId
   );
-
+  
   await participantService.checkParticipantsAreFromThisGroup(
     groupId,
     participantsIds
   );
+  
+  const isUserPartOfDivision = participantsIds.find(obj => obj.id === userParticipantId )
 
   const expenseData: createExpenseType = {
     name,
     value: totalValue,
-    paidBy: participantId,
+    paidBy: userParticipantId,
     groupId,
+    divisionPart: isUserPartOfDivision ? true : false
   };
 
   const expense = await expenseRepository.createExpense(expenseData);
@@ -46,7 +49,8 @@ async function createExpense(
     participantsIds,
   };
 
-  const isUserPartOfDivision = participantsIds.find(obj => obj.id === expense.paidBy )
+  
+
 
   if(isUserPartOfDivision) {
     return await divisionService.splitExpenseWhenUserIsPartOfDivision(divisionsParam);
@@ -56,13 +60,12 @@ async function createExpense(
 }
 
 async function getAllExpense(userId: number, groupId: number) {
-  //return await expenseRepository.getAllExpense(groupId)
   const result: getAllExpenseType[] = await expenseRepository.getAllExpense(
     groupId
   );
+
   const expenses = await formatGetAllexpenseReturn(result);
-  const numberOfGroupParticipants =
-    await participantRepository.countGroupParticipantsWhenAceptIstrue(groupId);
+  const numberOfGroupParticipants = await participantRepository.countGroupParticipantsWhenAceptIstrue(groupId);
   return { quantity: numberOfGroupParticipants, expenses };
 }
 
@@ -71,13 +74,17 @@ async function formatGetAllexpenseReturn(originalList: getAllExpenseType[]) {
     expenseId: obj.id,
     name: obj.name,
     value: obj.value,
+    divisionPart: obj.divisionPart,
     createdAt: obj.createdAt,
     paidBy: {
       userId: obj.Participants.userId,
       name: obj.Participants.User.name,
       image: obj.Participants.User.image,
     },
-    divisions: obj.Divisions.map((division) => ({
+    divisions: obj.Divisions.filter((division)=>{
+      return !(obj.divisionPart === false && obj.paidBy === division.participantId)
+    })
+    .map((division) => ({
       name: division.Participants.User.name,
     })),
   }));
@@ -101,17 +108,15 @@ async function getGeneralExpensesValues(userId: number, groupId: number) {
   );
 
   
-  const userPart = await getUserExpensesDivisionPart(groupId, participantId);
+  const userPart = await getUserExpensesDivisionPart(participantId);
   const members = await getMembersDivisions(groupId);
   return { group, userPaid, userPart, members };
 }
 
-async function getUserExpensesDivisionPart(
-  groupId: number,
-  participantId: number
-) {
+async function getUserExpensesDivisionPart(participantId: number) {
+  const divisionPart = true
   const result: ExpensesWithDivisions[] =
-    await expenseRepository.getUserExpensesDivisionPart(groupId, participantId);
+    await expenseRepository.getUserExpensesDivisionPart(participantId, divisionPart);
   const expensesDivisions = result.map(
     (obj) => obj.value / obj.Divisions.length
   );
