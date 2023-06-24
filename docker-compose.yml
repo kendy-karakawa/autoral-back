@@ -5,7 +5,7 @@ services:
     ports:
       - 5433:5432
     env_file:
-      - ./.env
+      - ./.env.production
     volumes:
       - postgres-volume:/var/lib/postgresql/data
 
@@ -17,7 +17,7 @@ services:
     depends_on:
       - postgres
     env_file:
-      - ./.env
+      - ./.env.production
 
 volumes:
   postgres-volume:

@@ -21,7 +21,7 @@ describe("POST /user", () => {
 
   it("should respond with status 400 when body is not valid", async () => {
     const invalidBody = {
-      name: faker.name.findName(),
+      name: faker.internet.userName(),
       email: faker.internet.email(),
     };
 
@@ -32,7 +32,7 @@ describe("POST /user", () => {
 
   describe("when body is valid", () => {
     const generateValidBody = () => ({
-      name: faker.name.findName(),
+      name: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(6),
       phone: "11999999999",
