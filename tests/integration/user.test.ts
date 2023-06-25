@@ -42,6 +42,7 @@ describe("POST /user", () => {
       const body = generateValidBody();
       createUser(body);
       const response = await server.post("/user").send(body);
+      console.log(body)
 
       expect(response.status).toBe(httpStatus.CONFLICT);
       expect(response.body).toEqual({ message: "Email already exist" });

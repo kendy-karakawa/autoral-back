@@ -8,7 +8,7 @@ import groupService from "./group-service";
 
 async function createUser ({name, email, phone, password}: CreateUserParams): Promise<User> {
     await validateEmail(email)
-
+    console.log("cheguei")
     const hashedPassword = await bcrypt.hash(password, 12);
 
     return userRepository.create({
