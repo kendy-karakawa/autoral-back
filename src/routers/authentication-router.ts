@@ -5,4 +5,4 @@ const authenticationRouter = Router()
 
 authenticationRouter.post('/', signIn)
 
-export default authenticationRouter
+export default authenticationRouter 
