@@ -6,9 +6,13 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 async function signIn(email: string, password: string): Promise<SigInResult> {
+  console.log(`Entrei no service e recebi email:${email}, senha: ${password} vou checar o user`)
   const user = await getUserOrErro(email);
+  console.log(`o usuario existe e vou checar a senha`)
   await validatePasswordOrErro(password, user.password);
+  console.log(`Passei pela verificação de senha e vou criar a sessao`)
   const token = await createSession(user.id);
+  console.log(`recebi o token e vou retornar os dados`)
   return {
     id: user.id,
     name: user.name,
@@ -31,8 +35,11 @@ async function validatePasswordOrErro(password: string, useerPassword: string) {
 }
 
 async function createSession(userId: number) {
+  console.log(`entrei na função para criar a seção, e vou criar o token`)
   const token = jwt.sign({ userId }, process.env.JWT_SECRET);
+  console.log(`Criei o token jwt: ${token} e vou criar a seção no banco`)
   await sessionRepository.createSession({ token, userId });
+  console.log(`Criei a sessao e vou retornar o token`)
   return token;
 }
 

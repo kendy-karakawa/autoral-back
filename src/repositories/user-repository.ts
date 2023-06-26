@@ -10,7 +10,7 @@ async function findByEmail(email: string) {
 }
 
 async function create(data: Prisma.UserUncheckedCreateInput) {
-  return prisma.user.create({
+  return await prisma.user.create({
     data,
   });
 }
