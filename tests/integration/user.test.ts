@@ -40,9 +40,8 @@ describe("POST /user", () => {
 
     it("should respond with status 409 when there is an user with given email", async () => {
       const body = generateValidBody();
-      createUser(body);
+      await createUser(body);
       const response = await server.post("/user").send(body);
-      console.log(body)
 
       expect(response.status).toBe(httpStatus.CONFLICT);
       expect(response.body).toEqual({ message: "Email already exist" });
