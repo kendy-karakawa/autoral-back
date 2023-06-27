@@ -1,4 +1,5 @@
 export * from "./users-schemas";
 export * from "./groups-schemas";
 export * from "./partcipants-chemas";
-export * from "./expense-schemas"
+export * from "./expense-schemas";
+export * from "./authentication-schemas"
