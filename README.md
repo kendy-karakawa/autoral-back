@@ -1,10 +1,10 @@
-# drivent-back-prisma
+# DiviSplit-back-prisma
 
-Back-end for Driven.t, an event management solution.
+Back-end for DiviSplit - The App for Group Expense Splitting
 
 ## About
 
-Driven.t is a web browser application with which you can manage every single aspect of your event.
+DiviSplit is an innovative app designed to streamline and expedite the process of splitting expenses within a group. Whether it's a trip with friends, a birthday party, or even monthly bills in a shared living arrangement, DiviSplit is the ideal solution to avoid confusion and simplify expense division.
 
 ## How to run for development
 
